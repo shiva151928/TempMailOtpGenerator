@@ -1,0 +1,96 @@
+<section class="panel generator" aria-labelledby="generator-title">
+  @if (store.session(); as session) {
+    <h2 id="generator-title" class="panel-title">Your temporary address</h2>
+
+    <div class="address-row">
+      <label class="visually-hidden" for="generated-address">Generated email address</label>
+      <input
+        id="generated-address"
+        class="address"
+        type="text"
+        readonly
+        spellcheck="false"
+        [class.address-expired]="store.expired()"
+        [value]="session.address"
+        (focus)="selectAll($event)"
+      />
+      <button type="button" class="btn btn-primary copy" (click)="copyAddress(session.address)" [disabled]="store.expired()">
+        {{ copied() ? 'Copied' : 'Copy email' }}
+      </button>
+    </div>
+
+    <div class="expiry" [class.expiry-soon]="expiringSoon()" [class.expiry-over]="store.expired()">
+      <p class="expiry-text">
+        @if (store.expired()) {
+          This address has expired. Generate a new one to keep receiving mail.
+        } @else {
+          Expires in <strong class="countdown">{{ countdown() }}</strong>
+        }
+      </p>
+      <div
+        class="meter"
+        role="progressbar"
+        aria-label="Time left before the address expires"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="percentRounded()"
+      >
+        <div class="meter-fill" [style.width.%]="percentLeft()"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn btn-secondary" (click)="store.generate()" [disabled]="store.generating()">
+        @if (store.generating()) {
+          <span class="spinner" aria-hidden="true"></span> Generating…
+        } @else {
+          Generate new email
+        }
+      </button>
+      <button type="button" class="btn btn-quiet" (click)="store.refresh()" [disabled]="store.refreshing() || store.expired()">
+        @if (store.refreshing()) {
+          <span class="spinner" aria-hidden="true"></span> Refreshing…
+        } @else {
+          Refresh inbox
+        }
+      </button>
+      @if (session.isDemo) {
+        <button type="button" class="btn btn-quiet" (click)="store.simulateDemoOtp()" [disabled]="store.simulating() || store.expired()">
+          @if (store.simulating()) {
+            <span class="spinner" aria-hidden="true"></span> Sending…
+          } @else {
+            Send test email
+          }
+        </button>
+      }
+      <button type="button" class="btn btn-danger delete" (click)="confirmDelete()" [disabled]="store.deleting()">
+        {{ store.deleting() ? 'Deleting…' : 'Delete inbox' }}
+      </button>
+    </div>
+
+    <p class="sync" [class.sync-error]="store.syncError() !== null" aria-live="polite">
+      @if (store.syncError(); as error) {
+        {{ error }}
+      } @else if (!store.expired()) {
+        New mail is checked every {{ store.pollIntervalSeconds() }} seconds.
+        @if (lastChecked()) {
+          Last checked {{ lastChecked() }}.
+        }
+      }
+    </p>
+  } @else {
+    <div class="intro">
+      <h1 class="intro-title">A throwaway inbox for sign-up codes</h1>
+      <p class="intro-text">
+        Generate an address, paste it into any sign-up or login form, and the verification code appears on the right as soon as the email lands.
+      </p>
+      <button type="button" class="btn btn-primary btn-large" (click)="store.generate()" [disabled]="store.generating()">
+        @if (store.generating()) {
+          <span class="spinner" aria-hidden="true"></span> Generating…
+        } @else {
+          Generate email
+        }
+      </button>
+    </div>
+  }
+</section>

@@ -1,0 +1,58 @@
+<app-notification />
+
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" />
+        <path d="M14 22h36v22H14z M14 22l18 13 18-13" />
+      </svg>
+      <span class="brand-name">TempMail OTP</span>
+    </div>
+
+    <div class="provider" [class.provider-demo]="store.isDemo()" [class.provider-offline]="store.providerError() !== null">
+      @if (store.provider(); as provider) {
+        <span class="provider-dot" aria-hidden="true"></span>
+        <span>{{ provider.isDemo ? 'Demo mode' : provider.displayName + ' connected' }}</span>
+      } @else if (store.providerError()) {
+        <span class="provider-dot" aria-hidden="true"></span>
+        <span>API unreachable</span>
+      } @else {
+        <span>Connecting…</span>
+      }
+    </div>
+  </header>
+
+  @if (store.providerError(); as message) {
+    <div class="banner banner-error" role="alert">{{ message }}</div>
+  }
+
+  @if (store.isDemo()) {
+    <div class="banner banner-demo" role="status">
+      <strong>Demo mode:</strong> this server isn't connected to a real email provider, so no real email arrives.
+      Use <em>Send test email</em> to see how codes are detected. Set <code>EmailProvider:Provider</code> to
+      <code>MailTm</code> on the API for real addresses.
+    </div>
+  }
+
+  <main class="layout">
+    <div class="top-row">
+      <app-email-generator class="generator-slot" />
+      <app-otp-viewer class="otp-slot" />
+    </div>
+
+    <div class="mail-row" [class.reading]="store.selectedMessageId() !== null">
+      <app-inbox class="inbox-slot" />
+      <app-email-details class="details-slot" />
+    </div>
+  </main>
+
+  <footer class="footer">
+    @if (store.provider(); as provider) {
+      @if (provider.attributionUrl) {
+        <a [href]="provider.attributionUrl" target="_blank" rel="noopener noreferrer">{{ provider.attributionText }}</a>
+      }
+    }
+    <span>Addresses expire automatically. Don't use them for accounts you'll need to recover later.</span>
+  </footer>
+</div>

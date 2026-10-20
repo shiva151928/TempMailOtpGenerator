@@ -1,0 +1,60 @@
+<section class="panel inbox" aria-labelledby="inbox-title">
+  <header class="inbox-head">
+    <h2 id="inbox-title" class="panel-title">
+      Inbox
+      @if (store.messages().length > 0) {
+        <span class="count">{{ store.messages().length }}</span>
+      }
+    </h2>
+    @if (store.unreadCount() > 0) {
+      <span class="unread">{{ store.unreadCount() }} unread</span>
+    }
+  </header>
+
+  @if (!store.hasInbox()) {
+    <div class="empty">
+      <p class="empty-title">No inbox yet</p>
+      <p>Generate an address and incoming mail will be listed here.</p>
+    </div>
+  } @else if (store.initialLoading() && store.messages().length === 0) {
+    <ul class="skeleton" aria-label="Loading messages">
+      @for (row of skeletonRows; track row) {
+        <li class="skeleton-row">
+          <span class="bar bar-short"></span>
+          <span class="bar"></span>
+        </li>
+      }
+    </ul>
+  } @else if (store.messages().length === 0) {
+    <div class="empty">
+      <p class="empty-title">No messages yet</p>
+      <p>
+        Use <strong>{{ store.session()?.address }}</strong> on a sign-up or login form. New mail appears here on its own;
+        there's no need to reload the page.
+      </p>
+    </div>
+  } @else {
+    <ul class="messages">
+      @for (message of store.messages(); track message.id) {
+        <li>
+          <button
+            type="button"
+            class="message"
+            [class.message-unread]="!message.isRead"
+            [class.message-selected]="message.id === store.selectedMessageId()"
+            [attr.aria-current]="message.id === store.selectedMessageId() ? 'true' : null"
+            (click)="store.openMessage(message.id)"
+          >
+            <span class="sender">{{ message.fromName || message.fromAddress }}</span>
+            <time class="time" [attr.datetime]="message.receivedAt">{{ relative(message.receivedAt) }}</time>
+            <span class="subject">{{ message.subject || '(no subject)' }}</span>
+            @if (message.otpCode) {
+              <span class="code-chip">Code {{ message.otpCode }}</span>
+            }
+            <span class="preview">{{ message.preview }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>

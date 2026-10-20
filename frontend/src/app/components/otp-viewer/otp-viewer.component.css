@@ -1,0 +1,183 @@
+:host {
+  display: block;
+}
+
+/* The OTP box is the one emphasized surface on the page. */
+.otp-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  padding: 22px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.otp-ready {
+  border-color: var(--blue);
+  background: linear-gradient(180deg, var(--blue-wash) 0%, var(--paper) 70%);
+}
+
+.otp-new {
+  box-shadow: 0 0 0 4px rgba(31, 91, 255, 0.18);
+}
+
+.otp-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--blue-deep);
+}
+
+.digits {
+  display: flex;
+  justify-content: center;
+  gap: clamp(4px, 1.2vw, 8px);
+}
+
+.digit {
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 6vw, 46px);
+  height: clamp(46px, 8vw, 60px);
+  border: 1.5px solid var(--blue);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  user-select: all;
+}
+
+.digits-enter .digit {
+  animation: digit-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes digit-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.digits-empty .digit {
+  border-style: dashed;
+  border-color: var(--line-strong);
+  background: var(--mist);
+}
+
+.waiting {
+  text-align: center;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.waiting-hint {
+  margin-top: -8px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.copy {
+  min-height: 48px;
+  font-size: 1rem;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.meta div {
+  min-width: 0;
+}
+
+.meta dt {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.meta dd {
+  margin: 0;
+  overflow: hidden;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta div:last-child {
+  text-align: right;
+}
+
+.history {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: 0.9rem;
+}
+
+.history summary {
+  cursor: pointer;
+  color: var(--blue-deep);
+  font-weight: 700;
+}
+
+.history ul {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  text-align: left;
+  cursor: pointer;
+}
+
+.history-item:hover {
+  border-color: var(--line-strong);
+  background: var(--blue-wash);
+}
+
+.history-code {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.history-meta {
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-action {
+  color: var(--blue-deep);
+  font-size: 0.82rem;
+  font-weight: 700;
+}

@@ -1,0 +1,193 @@
+/* Design tokens: clean white and blue. */
+:root {
+  --paper: #ffffff;
+  --mist: #f2f5fb;
+  --ink: #0f1e3d;
+  --ink-soft: #52617f;
+  --line: #d9e1ee;
+  --line-strong: #c3cee2;
+  --blue: #1f5bff;
+  --blue-deep: #1440c8;
+  --blue-tint: #e8efff;
+  --blue-wash: #f6f8ff;
+  --success: #127a4a;
+  --success-tint: #e7f6ee;
+  --danger: #c2312f;
+  --danger-tint: #fdeceb;
+  --warning: #b86400;
+  --warning-tint: #fff5e6;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --focus: 0 0 0 3px rgba(31, 91, 255, 0.35);
+  --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--mist);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--blue-deep);
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+/* Panels share a surface but not a single look; each component sets its own emphasis. */
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.panel-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--blue-deep);
+}
+
+.btn-secondary {
+  border-color: var(--blue);
+  background: var(--paper);
+  color: var(--blue-deep);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--blue-wash);
+}
+
+.btn-quiet {
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.btn-quiet:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--blue-wash);
+}
+
+.btn-danger {
+  border-color: transparent;
+  background: none;
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-tint);
+}
+
+.btn-large {
+  min-height: 52px;
+  padding: 0 26px;
+  font-size: 1.05rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Loading */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+  flex: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

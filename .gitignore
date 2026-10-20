@@ -1,0 +1,25 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+
+# Data Protection keys and local secrets
+.keys/
+.env
+appsettings.Local.json
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
+out-tsc/
+
+# Editors / OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db

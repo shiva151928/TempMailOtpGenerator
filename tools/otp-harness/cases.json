@@ -1,0 +1,269 @@
+{
+  "positive": [
+    {
+      "name": "phrase before code",
+      "subject": "Your verification code",
+      "text": "Your verification code is 482917. It expires in 10 minutes.",
+      "expected": "482917"
+    },
+    {
+      "name": "code first in subject",
+      "subject": "482917 is your Instagram code",
+      "text": "",
+      "expected": "482917"
+    },
+    {
+      "name": "standalone line",
+      "subject": "Sign in to Acme",
+      "text": "Use the code below to sign in.\n\n731905\n\nThis code expires in 15 minutes. If you didn't request it, ignore this email.",
+      "expected": "731905"
+    },
+    {
+      "name": "one-time password 4 digits",
+      "subject": "Your one-time password",
+      "text": "Dear customer, your One-Time Password (OTP) for login is 5823. Do not share it with anyone.",
+      "expected": "5823"
+    },
+    {
+      "name": "microsoft style",
+      "subject": "Microsoft account security code",
+      "text": "Microsoft account\nSecurity code\nPlease use the following security code for the Microsoft account ab***@example.com.\nSecurity code: 4729\nIf you don't recognize the Microsoft account ab***@example.com, you can click here to remove your email address from that account.",
+      "expected": "4729"
+    },
+    {
+      "name": "enter code to verify",
+      "subject": "Verify your email",
+      "text": "Enter 482917 to verify your email address.",
+      "expected": "482917"
+    },
+    {
+      "name": "grouped with space",
+      "subject": "Your login code",
+      "text": "Your login code: 482 917",
+      "expected": "482917"
+    },
+    {
+      "name": "grouped with hyphen",
+      "subject": "Security code",
+      "text": "Your security code is 482-917.",
+      "expected": "482917"
+    },
+    {
+      "name": "bank otp with amount",
+      "subject": "Transaction OTP",
+      "text": "OTP for txn of INR 5,000.00 at AMAZON is 123456. Valid for 10 mins. Do not share.",
+      "expected": "123456"
+    },
+    {
+      "name": "phone number nearby",
+      "subject": "Your code",
+      "text": "Call us at 1800 123 4567 for help. Your OTP is 4821.",
+      "expected": "4821"
+    },
+    {
+      "name": "html table with footer",
+      "subject": "Confirm your account",
+      "html": "<html><head><style>.x{color:red}</style></head><body><table><tr><td><p>Your verification code</p></td></tr><tr><td style='font-size:32px'>604918</td></tr><tr><td>&copy; 2026 Acme Inc, 1600 Main Street, CA 94043</td></tr></table></body></html>",
+      "expected": "604918"
+    },
+    {
+      "name": "zero width spaces",
+      "subject": "Code",
+      "text": "Your verification code is 4\u200b8\u200b2\u200b9\u200b1\u200b7",
+      "expected": "482917"
+    },
+    {
+      "name": "one digit per cell",
+      "subject": "Verify",
+      "html": "<p>Your verification code:</p><table><tr><td>4</td><td>8</td><td>2</td><td>9</td><td>1</td><td>7</td></tr></table><p>It expires soon.</p>",
+      "expected": "482917"
+    },
+    {
+      "name": "code before phrase in body",
+      "subject": "",
+      "text": "123456 is your verification code for Acme.",
+      "expected": "123456"
+    },
+    {
+      "name": "google prefix",
+      "subject": "",
+      "text": "G-482917 is your Google verification code.",
+      "expected": "482917"
+    },
+    {
+      "name": "apple id code",
+      "subject": "Your Apple ID Code is: 482917.",
+      "text": "Your Apple ID Code is: 482917. Don't share it with anyone.",
+      "expected": "482917"
+    },
+    {
+      "name": "eight digits",
+      "subject": "Your verification code",
+      "text": "Your verification code is 48291735",
+      "expected": "48291735"
+    },
+    {
+      "name": "pin medium keyword",
+      "subject": "Hello",
+      "text": "Your PIN is 4821",
+      "expected": "4821"
+    },
+    {
+      "name": "reference and phone distractors",
+      "subject": "Verify",
+      "text": "Your verification code is 482917. Reference number: 99887766. Call 1-800-555-0199.",
+      "expected": "482917"
+    },
+    {
+      "name": "year-like code with strong phrase",
+      "subject": "OTP",
+      "text": "Your OTP is 2024",
+      "expected": "2024"
+    },
+    {
+      "name": "order distractor before code",
+      "subject": "Verify",
+      "text": "Your verification code for order 12345 is 482917.",
+      "expected": "482917"
+    },
+    {
+      "name": "passcode",
+      "subject": "Passcode",
+      "text": "Here is your passcode: 90817",
+      "expected": "90817"
+    },
+    {
+      "name": "2fa code html",
+      "subject": "Two-factor authentication",
+      "html": "<div>Your two-factor authentication code</div><div><strong>338120</strong></div><div>Expires in 5 minutes</div>",
+      "expected": "338120"
+    },
+    {
+      "name": "otp before phrase with amount",
+      "subject": "OTP",
+      "text": "Dear Customer, 482917 is the OTP for your transaction of INR 2,500.00 at Flipkart. OTP valid for 10 mins.",
+      "expected": "482917"
+    },
+    {
+      "name": "code with colon",
+      "subject": "Uber",
+      "text": "Your Uber code: 4821. Never share this code.",
+      "expected": "4821"
+    },
+    {
+      "name": "use code as verification code",
+      "subject": "",
+      "text": "Use 482917 as your verification code.",
+      "expected": "482917"
+    },
+    {
+      "name": "sign-in code on own line",
+      "subject": "Your Netflix sign-in code",
+      "text": "Enter this code to sign in\n4829\nThis code expires in 15 minutes",
+      "expected": "4829"
+    },
+    {
+      "name": "html with address footer",
+      "subject": "Welcome! Confirm your email",
+      "html": "<h1>Welcome aboard</h1><p>Confirm your email with this code:</p><h2>482917</h2><p>Questions? Call 1-800-555-0199. Acme, 500 Howard St, San Francisco, CA 94105.</p>",
+      "expected": "482917"
+    }
+  ],
+  "negative": [
+    {
+      "name": "newsletter",
+      "subject": "October deals",
+      "text": "Save 20% on orders over $50 until Oct 31, 2026. Visit our store at 1600 Main Street, Springfield. Call 555-123-4567."
+    },
+    {
+      "name": "order shipped",
+      "subject": "Order confirmation",
+      "text": "Thanks for your order! Order #12345678 has shipped. Tracking number: 940011189922. Confirm delivery details below."
+    },
+    {
+      "name": "date and time",
+      "subject": "Your verification code",
+      "text": "Your verification code was sent on 20/10/2026 at 05:55. Please check your phone."
+    },
+    {
+      "name": "promo code",
+      "subject": "Weekend sale",
+      "text": "Use promo code 4500 at checkout for $10 off your next order."
+    },
+    {
+      "name": "copyright year",
+      "subject": "Verify your email",
+      "text": "Click the button to verify your email.\n\u00a9 2026 Acme Inc. All rights reserved."
+    },
+    {
+      "name": "phone numbers",
+      "subject": "Contact",
+      "text": "Need help verifying? Call +1 (555) 123-4567 or +91 98765 43210."
+    },
+    {
+      "name": "amount and transaction id",
+      "subject": "Your receipt",
+      "text": "Your verification is complete. Amount paid: Rs 4999. Transaction ID 55667788."
+    },
+    {
+      "name": "digits only in link",
+      "subject": "Verify your account",
+      "text": "Please verify: https://example.com/verify?token=482917&id=1234"
+    },
+    {
+      "name": "time units",
+      "subject": "Your code",
+      "text": "Your verification link expires in 1440 minutes."
+    },
+    {
+      "name": "no keywords",
+      "subject": "Hello",
+      "text": "We have 2500 new users and 1200 posts this week."
+    },
+    {
+      "name": "address far from keyword",
+      "subject": "Your verification code",
+      "text": "Hi there,\n\nThanks for signing up. We will send your verification code shortly. In the meantime, take a look around, set up your profile, invite your teammates and explore the templates gallery to get started quickly with your first project.\n\nAcme Inc, 4821 Market Street, San Francisco 94107"
+    },
+    {
+      "name": "card ending",
+      "subject": "Payment",
+      "text": "Your verification of card ending in 4821 is complete."
+    },
+    {
+      "name": "date with month name",
+      "subject": "Verification",
+      "text": "Your verification was completed on October 20, 2026."
+    },
+    {
+      "name": "account number",
+      "subject": "Verify",
+      "text": "Please verify account number 48291735 before continuing."
+    },
+    {
+      "name": "order number verified",
+      "subject": "Shipped",
+      "text": "Your order 482917 has been verified and shipped."
+    },
+    {
+      "name": "meeting id and passcode",
+      "subject": "Zoom",
+      "text": "Join Zoom Meeting. Meeting ID: 8472 9921 0034 Passcode: abc123"
+    },
+    {
+      "name": "long phone number",
+      "subject": "Verify",
+      "text": "Verify your identity by calling 18001234567."
+    },
+    {
+      "name": "bonus points",
+      "subject": "Your code",
+      "text": "Get 1500 bonus points when you confirm your subscription."
+    },
+    {
+      "name": "join date",
+      "subject": "Verify your email",
+      "text": "Thanks for joining on 12 March 2026. Verify your email to continue."
+    }
+  ]
+}

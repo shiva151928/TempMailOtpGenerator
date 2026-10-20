@@ -1,0 +1,36 @@
+### TempMail OTP API — run with the VS Code REST Client or Visual Studio / Rider HTTP client.
+### 1) Generate an inbox, 2) copy inboxId and accessToken into the variables below.
+
+@baseUrl = http://localhost:5080
+@inboxId = paste-inbox-id-here
+@token = paste-access-token-here
+
+### Provider info (shows whether demo mode is active)
+GET {{baseUrl}}/api/temp-mail/provider
+
+### Generate a temporary inbox
+POST {{baseUrl}}/api/temp-mail/generate
+
+### Status (address, expiration, sync state)
+GET {{baseUrl}}/api/temp-mail/{{inboxId}}/status
+X-Inbox-Token: {{token}}
+
+### Messages (syncs with the provider when stale)
+GET {{baseUrl}}/api/temp-mail/{{inboxId}}/messages
+X-Inbox-Token: {{token}}
+
+### Force refresh
+POST {{baseUrl}}/api/temp-mail/{{inboxId}}/refresh
+X-Inbox-Token: {{token}}
+
+### Latest OTP and history
+GET {{baseUrl}}/api/temp-mail/{{inboxId}}/otp
+X-Inbox-Token: {{token}}
+
+### Demo mode only: add a simulated verification email
+POST {{baseUrl}}/api/temp-mail/{{inboxId}}/demo/simulate-otp
+X-Inbox-Token: {{token}}
+
+### Delete the inbox
+DELETE {{baseUrl}}/api/temp-mail/{{inboxId}}
+X-Inbox-Token: {{token}}

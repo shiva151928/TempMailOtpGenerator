@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TempMailOtp.Api/TempMailOtp.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TempMailOtp.Tests/TempMailOtp.Tests.csproj" />
+  </Folder>
+</Solution>

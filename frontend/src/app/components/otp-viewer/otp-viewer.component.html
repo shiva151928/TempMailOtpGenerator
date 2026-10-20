@@ -1,0 +1,68 @@
+<section class="otp-box" [class.otp-ready]="otp() !== null" [class.otp-new]="highlight()" aria-labelledby="otp-title">
+  <h2 id="otp-title" class="otp-title">Your OTP Code</h2>
+
+  @if (otp(); as current) {
+    @if (highlight()) {
+      <!-- Re-rendered for each new code so the tiles animate in once. -->
+      <div class="digits digits-enter" role="group" [attr.aria-label]="'Code ' + spokenCode()">
+        @for (digit of digits(); track $index) {
+          <span class="digit" [style.animation-delay.ms]="$index * 45">{{ digit }}</span>
+        }
+      </div>
+    } @else {
+      <div class="digits" role="group" [attr.aria-label]="'Code ' + spokenCode()">
+        @for (digit of digits(); track $index) {
+          <span class="digit">{{ digit }}</span>
+        }
+      </div>
+    }
+
+    <button type="button" class="btn btn-primary btn-block copy" (click)="copy(current.code)">
+      {{ copiedCode() === current.code ? 'Copied' : 'Copy OTP' }}
+    </button>
+
+    <dl class="meta">
+      <div>
+        <dt>From</dt>
+        <dd>{{ current.senderName || current.senderAddress }}</dd>
+      </div>
+      <div>
+        <dt>Received</dt>
+        <dd>
+          <time [attr.datetime]="current.receivedAt" [title]="current.receivedAt | date: 'medium'">{{ relative(current.receivedAt) }}</time>
+        </dd>
+      </div>
+    </dl>
+
+    @if (olderCodes().length > 0) {
+      <details class="history">
+        <summary>Earlier codes ({{ olderCodes().length }})</summary>
+        <ul>
+          @for (item of olderCodes(); track item.messageId) {
+            <li>
+              <button type="button" class="history-item" (click)="copy(item.code)" [attr.aria-label]="'Copy code ' + item.code">
+                <span class="history-code">{{ item.code }}</span>
+                <span class="history-meta">{{ item.senderName || item.senderAddress }}, {{ relative(item.receivedAt) }}</span>
+                <span class="history-action">{{ copiedCode() === item.code ? 'Copied' : 'Copy' }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </details>
+    }
+  } @else {
+    <div class="digits digits-empty" aria-hidden="true">
+      @for (slot of placeholderDigits; track slot) {
+        <span class="digit"></span>
+      }
+    </div>
+    <p class="waiting" aria-live="polite">Waiting for OTP...</p>
+    <p class="waiting-hint">
+      @if (store.hasInbox()) {
+        Codes from verification emails show up here automatically.
+      } @else {
+        Generate an address first. Codes from verification emails will show up here.
+      }
+    </p>
+  }
+</section>

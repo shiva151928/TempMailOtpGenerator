@@ -1,0 +1,374 @@
+{
+  "info": {
+    "name": "TempMail OTP API",
+    "description": "Requests for the TempMail OTP Generator backend. Run 'Generate inbox' first; it stores inboxId and token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5080"
+    },
+    {
+      "key": "inboxId",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "messageId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Provider info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/provider",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "provider"
+          ]
+        },
+        "description": "Shows the configured provider. isDemo=true means no real email is received."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('reports provider', () => pm.expect(pm.response.json()).to.have.property('isDemo'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Generate inbox",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/generate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "generate"
+          ]
+        },
+        "description": "Creates a mailbox at the provider. Saves inboxId and accessToken into collection variables."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('inboxId', body.inboxId);",
+              "pm.collectionVariables.set('token', body.accessToken);",
+              "pm.test('has address', () => pm.expect(body.address).to.include('@'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Status",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "status"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/messages",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "messages"
+          ]
+        },
+        "description": "Lists messages (newest first) and the latest OTP. Saves the newest message id as messageId."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "if (body.messages.length > 0) { pm.collectionVariables.set('messageId', body.messages[0].id); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refresh",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/refresh",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "refresh"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Latest OTP and history",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/otp",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "otp"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Message details",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/messages/{{messageId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "messages",
+            "{{messageId}}"
+          ]
+        },
+        "description": "Run 'Messages' first so messageId is set."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Demo: simulate OTP email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/demo/simulate-otp",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "demo",
+            "simulate-otp"
+          ]
+        },
+        "description": "Only works when EmailProvider:Provider is Demo. Returns 404 otherwise."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK in demo mode', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Missing token is rejected",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}/messages",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}",
+            "messages"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('problem code', () => pm.expect(pm.response.json().code).to.eql('inbox_token_missing'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete inbox",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-Inbox-Token",
+            "value": "{{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/temp-mail/{{inboxId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "temp-mail",
+            "{{inboxId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('204 No Content', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

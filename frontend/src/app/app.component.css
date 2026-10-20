@@ -1,0 +1,157 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 0 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+}
+
+.brand-mark rect {
+  fill: var(--blue);
+}
+
+.brand-mark path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.brand-name {
+  white-space: nowrap;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.provider {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.provider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.provider-demo .provider-dot {
+  background: var(--warning);
+}
+
+.provider-offline .provider-dot {
+  background: var(--danger);
+}
+
+.banner {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.banner-demo {
+  border: 1px solid #f3d3a6;
+  background: var(--warning-tint);
+  color: #6b3a00;
+}
+
+.banner-error {
+  border: 1px solid #f2c4c2;
+  background: var(--danger-tint);
+  color: #8a1f1d;
+}
+
+.banner code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.85em;
+}
+
+.layout {
+  display: grid;
+  gap: 20px;
+}
+
+.top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.mail-row {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  margin-top: 32px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.footer a {
+  color: var(--blue-deep);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    padding: 0 16px 32px;
+  }
+
+  .top-row,
+  .mail-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* On small screens the open message replaces the list. */
+  .mail-row.reading .inbox-slot {
+    display: none;
+  }
+
+  .mail-row:not(.reading) .details-slot {
+    display: none;
+  }
+}

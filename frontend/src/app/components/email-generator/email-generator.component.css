@@ -1,0 +1,157 @@
+:host {
+  display: block;
+}
+
+.generator {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+  padding: 24px;
+}
+
+.address-row {
+  display: flex;
+  gap: 10px;
+}
+
+.address {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 56px;
+  padding: 0 18px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--blue-wash);
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+}
+
+.address:focus-visible {
+  border-color: var(--blue);
+}
+
+.address-expired {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.copy {
+  height: 56px;
+  min-width: 128px;
+}
+
+.expiry {
+  display: grid;
+  gap: 8px;
+}
+
+.expiry-text {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.countdown {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.meter {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--blue-tint);
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--blue);
+  transition: width 900ms linear;
+}
+
+.expiry-soon .countdown {
+  color: var(--warning);
+}
+
+.expiry-soon .meter-fill {
+  background: var(--warning);
+}
+
+.expiry-over .expiry-text {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.delete {
+  margin-left: auto;
+}
+
+.sync {
+  min-height: 1.4em;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.sync-error {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.intro {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  align-content: center;
+  height: 100%;
+  min-height: 220px;
+}
+
+.intro-title {
+  max-width: 22ch;
+  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.intro-text {
+  max-width: 54ch;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .generator {
+    padding: 18px;
+  }
+
+  .address-row {
+    flex-direction: column;
+  }
+
+  .address {
+    width: 100%;
+    height: 52px;
+    font-size: 1.05rem;
+  }
+
+  .copy {
+    width: 100%;
+  }
+
+  .actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .delete {
+    margin-left: 0;
+  }
+}

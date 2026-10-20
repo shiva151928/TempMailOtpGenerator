@@ -1,0 +1,73 @@
+@if (store.selectedMessageId() !== null) {
+  <section class="panel details" aria-labelledby="details-title" aria-live="polite">
+    <div class="toolbar">
+      <button type="button" class="btn btn-quiet back" (click)="store.closeMessage()">Back to inbox</button>
+      @if (hasHtml() && hasText()) {
+        <div class="view-switch" role="group" aria-label="Message view">
+          <button type="button" [class.active]="view() === 'formatted'" [attr.aria-pressed]="view() === 'formatted'" (click)="view.set('formatted')">
+            Formatted
+          </button>
+          <button type="button" [class.active]="view() === 'text'" [attr.aria-pressed]="view() === 'text'" (click)="view.set('text')">
+            Plain text
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (store.messageLoading()) {
+      <div class="state">
+        <span class="spinner" aria-hidden="true"></span>
+        Loading message…
+      </div>
+    } @else if (store.messageError(); as error) {
+      <div class="state state-error" role="alert">{{ error }}</div>
+    } @else if (message(); as current) {
+      <header class="head">
+        <h2 id="details-title" class="subject">{{ current.subject || '(no subject)' }}</h2>
+        <p class="from">
+          <strong>{{ current.fromName || current.fromAddress }}</strong>
+          @if (current.fromName) {
+            <span class="address">{{ current.fromAddress }}</span>
+          }
+        </p>
+        <p class="date">{{ current.receivedAt | date: 'medium' }}</p>
+
+        @if (current.otp; as otp) {
+          <div class="code-line">
+            <span>Code in this message</span>
+            <strong class="code">{{ otp.code }}</strong>
+            <button type="button" class="btn btn-primary copy" (click)="copyCode(otp.code)">{{ copied() ? 'Copied' : 'Copy' }}</button>
+          </div>
+        }
+
+        @if (current.hasAttachments) {
+          <p class="note">This message has attachments. They aren't downloaded or shown here.</p>
+        }
+      </header>
+
+      @if (showFormatted()) {
+        <iframe
+          class="frame"
+          title="Email content"
+          sandbox="allow-popups allow-popups-to-escape-sandbox"
+          referrerpolicy="no-referrer"
+          [srcdoc]="frameDocument()"
+        ></iframe>
+      } @else if (current.textBody) {
+        <pre class="text">{{ current.textBody }}</pre>
+      } @else {
+        <p class="state">This message has no readable content.</p>
+      }
+    }
+  </section>
+} @else {
+  <section class="panel details details-idle">
+    <p>
+      @if (store.messages().length > 0) {
+        Select a message to read it.
+      } @else {
+        Messages you open appear here. Links only open when you click them.
+      }
+    </p>
+  </section>
+}
